@@ -7,7 +7,7 @@ import controller.*;
 
 import org.junit.jupiter.api.BeforeAll;
 
-public class controller_test {
+public class Tester {
 	
 	@BeforeAll
 	static void setUpBeforeClass() {
@@ -28,11 +28,35 @@ public class controller_test {
 	
 	@Test
 	void testBubleSort() {
-		SortingAlgorithm sortingAlgo = new SortingAlgorithm();
+		Sorting sortingAlgo = new Sorting();
 		String filepath = System.getProperty("user.dir") + "/src/test/data.txt";
 		controller controller = new controller();
 		LinkedNode root = controller.readValue(filepath);
-//		sortingAlgo.bubleSort(root);
+		controller.displayList(root);
+		sortingAlgo.bubleSort(root);
 //		controller.displayList(root);
+
+	}
+	
+	@Test
+	void testSwapNode() {
+		Sorting sortingAlgo = new Sorting();
+		controller controller = new controller();
+		LinkedNode list = new LinkedNode();
+		LinkedNode.Node root = list.getRoot();
+		root.setElement(3);
+		LinkedNode.Node node1 = list.newNode(1);
+		LinkedNode.Node node2 = list.newNode(8);
+		root.setNext(node1);
+		node1.setNext(node2);
+		LinkedNode.Node current = root;
+		LinkedNode.Node nextNode = current.getNext();
+		controller.displayList(list);
+		sortingAlgo.swapNode(null, current, nextNode);
+		list.setRoot(node1);
+		controller.displayList(list);
+		
+		
+		
 	}
 }

@@ -17,9 +17,10 @@ public class controller {
 		      while (myReader.hasNextLine()) {
 		    	  //read data from file
 		        String data = myReader.nextLine();
-		        int value = 0;
+		        int value;
 		        if(isInt(data)) {
 		        	value = Integer.parseInt(data);
+		        	System.out.println(value);
 		        }
 		        else
 		        	continue;
@@ -46,7 +47,7 @@ public class controller {
 	
 	public void displayList(final LinkedNode list) {
 		LinkedNode.Node current = list.getRoot();
-		while (current.getNext() != null) {
+		while (current != null) {
 			System.out.print(current.getElement());
 			System.out.print(" ");
 			current = current.getNext();

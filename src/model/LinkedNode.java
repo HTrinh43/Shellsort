@@ -4,6 +4,9 @@ public class LinkedNode {
 	Node root = null;
 	int count = 0;
 	
+	public LinkedNode() {
+		root = new Node();
+	}
 	public class Node{
 		private int value;
 		Node next= null;
@@ -13,11 +16,11 @@ public class LinkedNode {
 		}
 		
 		public Node() {
-//			this.value = 0;
 		}
 		
 		public void setNext(final Node node) {
 			this.next = node;
+			LinkedNode.this.addCount();
 		}
 		
 		public void setElement(final int element) {
@@ -39,6 +42,21 @@ public class LinkedNode {
 	
 	public Node newNode() {
 		return new Node();
+	}
+	
+	public Node newNode(int value) {
+		return new Node(value);
+	}
+	private void addCount() {
+		this.count++;
+	}
+	
+	public void setRoot(Node newRoot) {
+		this.root = newRoot;
+	}
+	
+	public int getCount() {
+		return this.count;
 	}
 		
 	
