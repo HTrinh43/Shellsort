@@ -1,39 +1,61 @@
 package controller;
-import model.LinkedNode;
+import java.util.ArrayList;
+
+import model.LinkedList;
+import model.LinkedList.LinkedNode;
 
 public class Sorting {
-	public void bubleSort(LinkedNode list) {
+	public void bubleSort(LinkedList list) {
 		controller controller = new controller();
-		LinkedNode.Node current;
-		LinkedNode.Node nextNode;
-		LinkedNode.Node prevNode;
-		LinkedNode.Node root = list.getRoot();
+		LinkedNode current;
+		LinkedNode nextNode;
+		LinkedNode prevNode;
+		ArrayList<String> resultList = new ArrayList<String>();
+		
 		boolean sorted = false;
 		while (sorted == false) {
 			//when the loop starts, set current to the root
+			//set sorted = true, if the list is sorted, sorted will be true at the end of the loop
 			sorted = true;
-			current = root;
+			current = list.getRoot();
 			prevNode = null;
 			while (current != null) {
-				if (current.getNext()!= null) {
-					if (current.getElement() > current.getNext().getElement()) {
+				if (current.getNext()!= null && current.getElement() > current.getNext().getElement()) {
 						nextNode = current.getNext();
+//						resultList.add(Integer.toString(current.getElement()));
 						swapNode(prevNode, current, nextNode);
-						if (prevNode == null) {
+
+						if (prevNode == null && nextNode.getElement() < list.getRoot().getElement()) {
 							list.setRoot(nextNode);
 						}
 						current = nextNode;
 						sorted = false;
-					}
+						resultList.add(controller.displayList(list));
 				}
+//				resultList.add(controller.displayList(list));
 				prevNode = current;
 				current = current.getNext();
-				controller.displayList(list);	
 			}
 		}
+		//write the sorting process to a file
+		controller.writeResult("bubleSort", resultList);
 	}
 	
-	public static void swapNode (LinkedNode.Node prev, LinkedNode.Node current, LinkedNode.Node next)
+	public void shellSort(LinkedList list) {
+		int interval = 1;
+		int size = list.getCount();
+		while (interval < size) {
+			interval = interval * 3 + 1;
+		}
+		while (interval > 0) {
+			for (int outer = interval; outer < size; outer++) {
+				
+			}
+		}
+		
+	}
+	
+	public static void swapNode (LinkedNode prev, LinkedNode current, LinkedNode next)
 	{
 		
 		if (current.getElement() > next.getElement()) {

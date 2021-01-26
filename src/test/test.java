@@ -1,8 +1,14 @@
 package test;
+import java.util.Random;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import controller.Sorting;
 import controller.controller;
-import model.LinkedNode;
+import model.LinkedList;
+import model.LinkedList.LinkedNode;;
 
 public class test {
 
@@ -10,13 +16,15 @@ public class test {
 		// TODO Auto-generated method stub
 		
 		Sorting sortingAlgo = new Sorting();
-		String filepath = System.getProperty("user.dir") + "/src/test/data.txt";
+		String filepath = System.getProperty("user.dir") + "/src/test/data10.txt";
 		controller controller = new controller();
-		LinkedNode root = controller.readValue(filepath);
+		LinkedList root = controller.readValue(filepath);
 		sortingAlgo.bubleSort(root);
-		controller.displayList(root);
 		
+		System.out.println(controller.displayList(root));
+		System.out.println(root.getMiddle().getElement());
 		
+//		createDataFile("data10", 10);
 //		int arr[] = {64, 34, 25, 12, 22, 11, 90}; 
 //		bubbleSort(arr);
 //		int n = arr.length; 
@@ -24,6 +32,36 @@ public class test {
 //            System.out.print(arr[i] + " "); 
 //        System.out.println(); 
     
+	}
+	
+	public static void createDataFile(final String filename, int size) {
+		final String filepath = System.getProperty("user.dir") + "/src/test/" + filename + ".txt";
+		try {
+			  Random rand = new Random(); //instance of random class
+		      int upperbound = size;
+		        //generate random values from 0-24
+		      int int_random = rand.nextInt(upperbound); 
+		      File myFile = new File(filepath);
+		      if (myFile.createNewFile()) {
+		        System.out.println("File created: " + myFile.getName());
+		      } else {
+		        System.out.println("File already exists.");
+		      }
+		      
+//		      FileWriter myWriter = new FileWriter(filepath);
+		      BufferedWriter myWriter = new BufferedWriter(new FileWriter(filepath, true));
+		      for (int i = 0; i < size; i++) {
+		    	  int_random = rand.nextInt(upperbound); 
+		    	  myWriter.write(Integer.toString(int_random));
+		    	  myWriter.newLine();
+		      }
+		      myWriter.close();
+		      
+		      
+		    } catch (IOException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
 	}
 	
 	private static void bubbleSort(int[] arr) {
