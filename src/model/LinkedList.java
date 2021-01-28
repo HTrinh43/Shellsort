@@ -8,6 +8,7 @@ public class LinkedList {
 	
 	public class LinkedNode {
 		private int value;
+		private int index;
 		LinkedNode next = null;
 		
 		public LinkedNode(final int value) {
@@ -18,12 +19,24 @@ public class LinkedList {
 			return this.value;
 		}
 		
+		public void setElement(final int value) {
+			this.value = value;
+		}
+		
 		public LinkedNode getNext() {
 			return this.next;
 		}
 		
 		public void setNext(final LinkedNode newNode) {
 			this.next = newNode;
+		}
+		
+		public void setIndex(final int index) {
+			this.index = index;
+		}
+		
+		public int getIndex() {
+			return this.index;
 		}
 	}
 	
@@ -46,6 +59,7 @@ public class LinkedList {
 	
 	public void add(final int value) {
 		LinkedNode newNode = new LinkedNode(value);
+		newNode.index = count;
 		if (this.root == null) {
 			this.root = newNode;
 			this.middle = root;
@@ -59,5 +73,9 @@ public class LinkedList {
 			if (this.count % 2 == 1)
 				this.middle = middle.next;	
 		}
+	}
+	
+	public LinkedNode newNode (final int value) {
+		return new LinkedNode(value);
 	}
 }

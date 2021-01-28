@@ -1,4 +1,5 @@
 package test;
+import java.util.Arrays;
 import java.util.Random;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,8 +8,7 @@ import java.io.IOException;
 
 import controller.Sorting;
 import controller.controller;
-import model.LinkedList;
-import model.LinkedList.LinkedNode;;
+import model.LinkedList;;
 
 public class test {
 
@@ -19,18 +19,18 @@ public class test {
 		String filepath = System.getProperty("user.dir") + "/src/test/data10.txt";
 		controller controller = new controller();
 		LinkedList root = controller.readValue(filepath);
-		sortingAlgo.bubleSort(root);
-		
+//		sortingAlgo.bubleSort(root); 
+		sortingAlgo.shellSort(root);
 		System.out.println(controller.displayList(root));
-		System.out.println(root.getMiddle().getElement());
+		System.out.println(root.getCount());
+//		int nums[] = {9,8,7,6,5,4,3,2,1,0};
+//		sortingAlgo.shellsortArray(nums);
+//        System.out.println("Original Array:");
+//        System.out.println(Arrays.toString(nums));
+
 		
 //		createDataFile("data10", 10);
-//		int arr[] = {64, 34, 25, 12, 22, 11, 90}; 
-//		bubbleSort(arr);
-//		int n = arr.length; 
-//        for (int i=0; i<n; ++i) 
-//            System.out.print(arr[i] + " "); 
-//        System.out.println(); 
+
     
 	}
 	
@@ -48,7 +48,6 @@ public class test {
 		        System.out.println("File already exists.");
 		      }
 		      
-//		      FileWriter myWriter = new FileWriter(filepath);
 		      BufferedWriter myWriter = new BufferedWriter(new FileWriter(filepath, true));
 		      for (int i = 0; i < size; i++) {
 		    	  int_random = rand.nextInt(upperbound); 
@@ -63,27 +62,4 @@ public class test {
 		      e.printStackTrace();
 		    }
 	}
-	
-	private static void bubbleSort(int[] arr) {
-		boolean sorted = false;
-		int n = arr.length; 
-		while (sorted == false) {
-			sorted = true;
-			int count = 0;
-			while (count < arr.length - 2 ) {
-			
-                if (arr[count] > arr[count+1]) 
-                { 
-                    // swap arr[j+1] and arr[j] 
-                    int temp = arr[count]; 
-                    arr[count] = arr[count+1]; 
-                    arr[count+1] = temp; 
-                    sorted = false;
-                    
-                }
-                count++;
-			}
-		}
-	}
-
 }

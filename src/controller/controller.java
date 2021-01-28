@@ -13,8 +13,12 @@ import model.LinkedList.LinkedNode;
 public class controller {
 	
 	public LinkedList readValue(final String fileName) {
+		/**
+		 * Get the value from a file and put them in a linked list
+		 * @param filename: the input filename
+		 * @return: a linked list with nodes contain value from the file
+		 */
 		LinkedList list = new LinkedList();
-//		LinkedNode currentNode = list.getRoot();
 		try {
 			  
 		      File myObj = new File(fileName);
@@ -39,6 +43,11 @@ public class controller {
 	}
 	
 	public String displayList(final LinkedList list) {
+		/**
+		 *Display the list
+		 *@param list: the linked list	
+		 *@return: a string contains all nodes' value
+		 */
 		LinkedNode current = list.getRoot();
 		StringBuilder result = new StringBuilder();
 		while (current != null) {
@@ -49,8 +58,25 @@ public class controller {
 		return result.toString();
 	}
 	
+	public String displayIndex(final LinkedList list) {
+		LinkedNode current = list.getRoot();
+		StringBuilder result = new StringBuilder();
+		while (current != null) {
+			result.append(current.getIndex());
+			result.append(" ");
+			current = current.getNext();
+			
+		}
+		return result.toString();
+	}
+	
 	//https://stackoverflow.com/questions/8491687/write-newline-into-a-file
 	public void writeResult(final String filename, final ArrayList<String> list) {
+		/**
+		 * Write the result to a file
+		 * @param filename: name of the file that will be written
+		 * @param list: an arraylist contains content 
+		 */
 		final String filepath = System.getProperty("user.dir") + "/src/test/" + filename + ".txt";
 		try {
 		      File myFile = new File(filepath);
@@ -76,6 +102,11 @@ public class controller {
 	}
 	//https://stackoverflow.com/questions/12558206/how-can-i-check-if-a-value-is-of-type-integer
 	private static boolean isInt(String s)
+	/**
+	 * Check if the string is an integer number
+	 * @param s: a string
+	 * @return: true if s is a integer, false if it is not
+	 */
 	{
 	    try
 	    {
