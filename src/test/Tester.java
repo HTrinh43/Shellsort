@@ -1,62 +1,117 @@
 package test;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Random;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
-import model.LinkedNode;
-import controller.*;
-
-import org.junit.jupiter.api.BeforeAll;
+import controller.Sorting;
+import controller.controller;
+import model.LinkedList;;
 
 public class Tester {
-	
-	@BeforeAll
-	static void setUpBeforeClass() {
-	}
-	
-	@Test
-	void testReadValue() {
-		String filepath = System.getProperty("user.dir") + "/src/test/data.txt";
-		controller controller = new controller();
-		LinkedNode list = controller.readValue(filepath);
 
-	}
-	
-	@Test 
-	void testDisplayList() {
-
-	}
-	
-	@Test
-	void testBubleSort() {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
 		Sorting sortingAlgo = new Sorting();
-		String filepath = System.getProperty("user.dir") + "/src/test/data.txt";
+		String filepath = System.getProperty("user.dir") + "/src/data/random100.txt";
 		controller controller = new controller();
-		LinkedNode root = controller.readValue(filepath);
-		controller.displayList(root);
-		sortingAlgo.bubleSort(root);
-//		controller.displayList(root);
+		LinkedList root = controller.readValue(filepath);
+//		sortingAlgo.bubleSort(root); 
+		sortingAlgo.shellSort(root);
+		System.out.println(controller.displayList(root));
+		System.out.println(root.getCount());
 
+
+//		createRandomDataFile("random100", 100);
+//		createRandomDataFile("random1000", 1000);
+//		createRandomDataFile("random10000", 10000);
+//		createOrderDataFile("order100", 100);
+//		createOrderDataFile("order1000", 1000);
+//		createOrderDataFile("order10000", 10000);
+//		createReverseOrderDataFile("reverse100", 100);
+//		createReverseOrderDataFile("reverse1000", 100);
+//		createReverseOrderDataFile("reverse10000", 100);
+    
 	}
 	
-	@Test
-	void testSwapNode() {
-		Sorting sortingAlgo = new Sorting();
-		controller controller = new controller();
-		LinkedNode list = new LinkedNode();
-		LinkedNode.Node root = list.getRoot();
-		root.setElement(3);
-		LinkedNode.Node node1 = list.newNode(1);
-		LinkedNode.Node node2 = list.newNode(8);
-		root.setNext(node1);
-		node1.setNext(node2);
-		LinkedNode.Node current = root;
-		LinkedNode.Node nextNode = current.getNext();
-		controller.displayList(list);
-		sortingAlgo.swapNode(null, current, nextNode);
-		list.setRoot(node1);
-		controller.displayList(list);
-		
-		
-		
+	public static void createRandomDataFile(final String filename, int size) {
+		final String filepath = System.getProperty("user.dir") + "/src/test/" + filename + ".txt";
+		try {
+			  Random rand = new Random(); //instance of random class
+		      int upperbound = size;
+		        //generate random values from 0-24
+		      int int_random = rand.nextInt(upperbound); 
+		      File myFile = new File(filepath);
+		      if (myFile.createNewFile()) {
+		        System.out.println("File created: " + myFile.getName());
+		      } else {
+		        System.out.println("File already exists.");
+		      }
+		      
+		      BufferedWriter myWriter = new BufferedWriter(new FileWriter(filepath, true));
+		      for (int i = 0; i < size; i++) {
+		    	  int_random = rand.nextInt(upperbound); 
+		    	  myWriter.write(Integer.toString(int_random));
+		    	  myWriter.newLine();
+		      }
+		      myWriter.close();
+		      
+		      
+		    } catch (IOException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
+	}
+	
+	public static void createOrderDataFile(final String filename, int size) {
+		final String filepath = System.getProperty("user.dir") + "/src/test/" + filename + ".txt";
+		try {
+		      File myFile = new File(filepath);
+		      if (myFile.createNewFile()) {
+		        System.out.println("File created: " + myFile.getName());
+		      } else {
+		        System.out.println("File already exists.");
+		      }
+		      
+		      BufferedWriter myWriter = new BufferedWriter(new FileWriter(filepath, true));
+		      for (int i = 0; i < size; i++) {
+		    	  
+		    	  myWriter.write(Integer.toString(i));
+		    	  myWriter.newLine();
+		      }
+		      myWriter.close();
+		      
+		      
+		    } catch (IOException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
+	}
+	
+	public static void createReverseOrderDataFile(final String filename, int size) {
+		final String filepath = System.getProperty("user.dir") + "/src/test/" + filename + ".txt";
+		try {
+		      File myFile = new File(filepath);
+		      if (myFile.createNewFile()) {
+		        System.out.println("File created: " + myFile.getName());
+		      } else {
+		        System.out.println("File already exists.");
+		      }
+		      
+		      BufferedWriter myWriter = new BufferedWriter(new FileWriter(filepath, true));
+		      for (int i = size; i > 0; i--) {
+		    	  
+		    	  myWriter.write(Integer.toString(i));
+		    	  myWriter.newLine();
+		      }
+		      myWriter.close();
+		      
+		      
+		    } catch (IOException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
 	}
 }

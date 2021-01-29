@@ -24,12 +24,11 @@ public class controller {
 		      File myObj = new File(fileName);
 		      Scanner myReader = new Scanner(myObj);
 		      int value;
-		      while (myReader.hasNextLine()) {
+		      while (myReader.hasNext()) {
 		    	  //read data from file
-		        String data = myReader.nextLine();
 
-		        if(isInt(data)) {
-		        	value = Integer.parseInt(data);
+		        if(myReader.hasNextInt()) {
+		        	value = myReader.nextInt();
 		        		list.add(value);
 		        	}
 		        }	  
@@ -99,22 +98,5 @@ public class controller {
 		      System.out.println("An error occurred.");
 		      e.printStackTrace();
 		    }
-	}
-	//https://stackoverflow.com/questions/12558206/how-can-i-check-if-a-value-is-of-type-integer
-	private static boolean isInt(String s)
-	/**
-	 * Check if the string is an integer number
-	 * @param s: a string
-	 * @return: true if s is a integer, false if it is not
-	 */
-	{
-	    try
-	    {
-	        Integer.parseInt(s);
-	        return true;
-	    } catch (NumberFormatException ex)
-	    {
-	        return false;
-	    }
 	}
 }
