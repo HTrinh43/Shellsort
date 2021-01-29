@@ -80,16 +80,34 @@ public class Sorting {
 				temp = findAWayToMove(list, innerIndex - interval, null);
 				prevTemp = findAWayToMove(list, temp.getIndex() - 1, null);
 				isRoot = prevTemp == null;
-				System.out.println("new loop");
-				while (innerIndex >= interval  && temp.getElement() >= valueNode.getElement()) {
+				System.out.println("go in inner loop");
+				while (innerIndex > interval -1 && temp.getElement() > valueNode.getElement()) {
 					inner = findAWayToMove(list, innerIndex, null);
 					LinkedNode newNode = list.newNode(temp.getElement());
+					
+					System.out.println("interval= " + interval +" inner Index: "+ innerIndex);
+					System.out.println("temp: "+ temp.getElement());
+					System.out.println("inner: "+ inner.getElement());
+					System.out.println("value: "+ valueNode.getElement());
+					System.out.println("newNode: "+ newNode.getElement());
+					
+					
 					replaceNode(list, inner, newNode);
-					System.out.println("Replace: " + inner.getElement() + " at index " + inner.getIndex() 
-					+ " to " + newNode.getElement());
+					
+					
+					LinkedNode prev = findAWayToMove(list, newNode.getIndex()-1, null);
+					System.out.println("prev.newNode "+ prev.getElement());
+//					System.out.println("inner: "+ newNode.getNext().getElement());
+					System.out.println("list: "+ controller.displayList(list));
+					System.out.println("index: "+ controller.displayIndex(list));
+					
+					
+					inner = null;
 					newNode = null;
 					innerIndex = innerIndex - interval;
 					temp = findAWayToMove(list, innerIndex - interval, null);
+					
+					
 //					if (interval == 1) {
 //						swapNode(prevTemp,temp,valueNode);
 //					}
@@ -115,16 +133,20 @@ public class Sorting {
 //					System.out.println("value: " + valueNode.getIndex()+ " valueNode value: " + valueNode.getElement());
 //					System.out.println("outer: " + outer.getIndex()+ " outer value: " + outer.getElement());
 //					System.out.println("root: "+ list.getRoot().getElement() + " " + list.getRoot().getNext().getElement());
-					System.out.println("list: "+ controller.displayList(list));
+
 //					System.out.println("root: "+ list.getRoot().getElement());
 //					System.out.println();
 				}
+			System.out.println();
+			System.out.println("break inner loop");
 			inner = findAWayToMove(list, innerIndex, null);
+			System.out.println(inner.getElement() + " " + valueNode.getElement() + " " + innerIndex);
 			replaceNode(list, inner, valueNode);
 			if (isRoot) {
 				list.setRoot(valueNode);
 			}
 			System.out.println("list: "+ controller.displayList(list));
+			System.out.println("index: "+ controller.displayIndex(list));
 			System.out.println();
 			//				prevA = nodeA;
 //			prevB = nodeB;
@@ -137,6 +159,7 @@ public class Sorting {
 			resultList.add(controller.displayList(list));
 		}
 		System.out.println("list: "+ controller.displayList(list));
+		System.out.println("index: "+ controller.displayIndex(list));
 		controller.writeResult("shellSort", resultList);
 	}
 	
@@ -145,7 +168,6 @@ public class Sorting {
 		replacedNode.setNext(current.getNext());
 		if (prev != null)
 			prev.setNext(replacedNode);
-		
 		
 		replacedNode.setIndex(current.getIndex());
 	}
@@ -271,5 +293,74 @@ public class Sorting {
 				increment = (increment - 1)/3;
 			}
 		}
+	}
+	
+	
+	
+	public void shellSort2(LinkedList list) {
+		//
+		int interval = 1;
+		int size = list.getCount();
+		while (interval < size/3) {
+			interval = interval * 3 + 1;
+		}
+		LinkedNode outer;
+		LinkedNode inner, prevInner;
+
+		LinkedNode startNode;
+		LinkedNode valueNode, prevValue;
+		LinkedNode temp;
+		LinkedNode prevTemp;
+		int outerIndex, innerIndex;
+		ArrayList<String> resultList = new ArrayList<String>();
+		controller controller = new controller();
+		boolean isRoot = false;
+		while (interval > 0) {
+			//setup nodeA and node
+			startNode = list.getRoot();
+			outer = findAWayToMove(list, interval, startNode);
+			outerIndex = outer.getIndex();
+			
+			while (outer != null) {
+				valueNode = list.newNode(outer.getElement());
+//				prevValue = findAWayToMove(list, valueNode.getIndex() - 1, null);
+				outerIndex = outer.getIndex();
+				innerIndex = outerIndex;
+				inner = outer;
+				temp = findAWayToMove(list, innerIndex - interval, null);
+				prevTemp = findAWayToMove(list, temp.getIndex() - 1, null);
+				isRoot = prevTemp == null;
+				System.out.println("go in inner loop");
+				while (innerIndex > interval -1 && temp.getElement() > valueNode.getElement()) {
+					prevInner = findAWayToMove(list, innerIndex - 1, null);
+					inner = prevInner.getNext();
+					prevTemp = findAWayToMove(list, temp.getIndex()-1, null);
+					if (interval == 1)
+						swapNode(prevTemp, temp, inner);
+					else {
+						swapNode(prevTemp, temp, prevInner, inner);
+					}
+					
+					if (prevTemp == null)
+						list.setRoot(inner);
+					
+					innerIndex = innerIndex - interval;
+					valueNode = findAWayToMove(list, innerIndex, null);
+					temp = findAWayToMove(list, innerIndex - interval, null);
+
+				}
+				System.out.println("list: "+ controller.displayList(list));
+				System.out.println("index: "+ controller.displayIndex(list));
+				System.out.println();
+
+				outer = findAWayToMove(list, outerIndex, null);
+				outer = outer.getNext();
+			}
+			interval = interval == 2 ? 1 : (interval - 1)/3;
+			resultList.add(controller.displayList(list));
+		}
+		System.out.println("list: "+ controller.displayList(list));
+		System.out.println("index: "+ controller.displayIndex(list));
+		controller.writeResult("shellSort", resultList);
 	}
 }

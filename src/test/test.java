@@ -20,7 +20,7 @@ public class test {
 		controller controller = new controller();
 		LinkedList root = controller.readValue(filepath);
 //		sortingAlgo.bubleSort(root); 
-		sortingAlgo.shellSort(root);
+		sortingAlgo.shellSort2(root);
 		System.out.println(controller.displayList(root));
 		System.out.println(root.getCount());
 //		int nums[] = {9,8,7,6,5,4,3,2,1,0};
