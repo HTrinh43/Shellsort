@@ -13,6 +13,7 @@ public class Sorting {
 		LinkedNode current;
 		LinkedNode nextNode;
 		LinkedNode prevNode;
+
 		ArrayList<String> resultList = new ArrayList<String>();
 		
 		boolean sorted = false;
@@ -145,6 +146,8 @@ public class Sorting {
 		while (interval < size/3) {
 			interval = interval * 3 + 1;
 		}
+		StringBuilder stb = new StringBuilder();
+		int pass = 0, cmp = 0;
 		LinkedNode outer;
 		LinkedNode inner, prevInner;
 
@@ -155,8 +158,10 @@ public class Sorting {
 		int outerIndex, innerIndex;
 		ArrayList<String> resultList = new ArrayList<String>();
 		controller controller = new controller();
-		boolean isRoot = false;
+//		boolean isRoot = false;
 		while (interval > 0) {
+			stb.append(interval);
+			stb.append(" ");
 			//setup nodeA and node
 			startNode = list.getRoot();
 			outer = findAWayToMove(list, interval, startNode);
@@ -167,21 +172,23 @@ public class Sorting {
 //				prevValue = findAWayToMove(list, valueNode.getIndex() - 1, null);
 				outerIndex = outer.getIndex();
 				innerIndex = outerIndex;
-				inner = outer;
+//				inner = outer;
 				temp = findAWayToMove(list, innerIndex - interval, null);
-				prevTemp = findAWayToMove(list, temp.getIndex() - 1, null);
-				isRoot = prevTemp == null;
+//				prevTemp = findAWayToMove(list, temp.getIndex() - 1, null);
+//				isRoot = prevTemp == null;
 				System.out.println("go in inner loop");
 				while (innerIndex > interval -1 && temp.getElement() > valueNode.getElement()) {
 					prevInner = findAWayToMove(list, innerIndex - 1, null);
 					inner = prevInner.getNext();
 					prevTemp = findAWayToMove(list, temp.getIndex()-1, null);
+					// 2 nodes are next to each other
 					if (interval == 1)
 						swapNode(prevTemp, temp, inner);
+					//2 nodes have gap > 1
 					else {
 						swapNode(prevTemp, temp, prevInner, inner);
 					}
-					
+					//if exchange node is the root, set the other node to be the root
 					if (prevTemp == null)
 						list.setRoot(inner);
 					
@@ -189,10 +196,6 @@ public class Sorting {
 					valueNode = findAWayToMove(list, innerIndex, null);
 					temp = findAWayToMove(list, innerIndex - interval, null);
 				}
-				System.out.println("list: "+ controller.displayList(list));
-				System.out.println("index: "+ controller.displayIndex(list));
-				System.out.println();
-
 				outer = findAWayToMove(list, outerIndex, null);
 				outer = outer.getNext();
 			}
