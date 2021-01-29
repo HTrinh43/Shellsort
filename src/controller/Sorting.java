@@ -4,7 +4,7 @@ import model.LinkedList;
 import model.LinkedList.LinkedNode;
 
 public class Sorting {
-	public void bubleSort(LinkedList list) {
+	public void bubbleSort(LinkedList list) {
 		/**
 		 * Using bubble sort algorithm to sort the list
 		 * @param list: the linkedlist
@@ -141,69 +141,88 @@ public class Sorting {
 
 	public void shellSort(LinkedList list) {
 		//
-		int interval = 1;
+		int gap = 1;
 		int size = list.getCount();
-		while (interval < size/3) {
-			interval = interval * 3 + 1;
+		while (gap < size/3) {
+			gap = gap * 3 + 1;
 		}
-		StringBuilder stb = new StringBuilder();
-		int pass = 0, cmp = 0;
-		LinkedNode outer;
-		LinkedNode inner, prevInner;
-
-		LinkedNode startNode;
-		LinkedNode valueNode, prevValue;
-		LinkedNode temp;
-		LinkedNode prevTemp;
-		int outerIndex, innerIndex;
+		int pass = 0, cmp = 0, exch = 0;
+		int totalPass = 0, totalCmp = 0, totalExch = 0, k = gap;
+		int totalGapCmp = 0, totalGapExch = 0;
+		LinkedNode boudary, tracking, prevInner, startNode, valueNode, temp, prevTemp;
+		int boundaryIndex, trackingIndex;
 		ArrayList<String> resultList = new ArrayList<String>();
 		controller controller = new controller();
-//		boolean isRoot = false;
-		while (interval > 0) {
-			stb.append(interval);
-			stb.append(" ");
-			//setup nodeA and node
-			startNode = list.getRoot();
-			outer = findAWayToMove(list, interval, startNode);
-			outerIndex = outer.getIndex();
+		addToOutput(resultList, "k \tpass \tcmp \texch");
+
+		while (gap > 0) {
+//			if(k != gap)
+//			addToOutput(resultList, (k) + "\t" + pass + "\t" + cmp + "\t" + exch);
+//			totalPass += pass;
 			
-			while (outer != null) {
-				valueNode = list.newNode(outer.getElement());
-//				prevValue = findAWayToMove(list, valueNode.getIndex() - 1, null);
-				outerIndex = outer.getIndex();
-				innerIndex = outerIndex;
-//				inner = outer;
-				temp = findAWayToMove(list, innerIndex - interval, null);
-//				prevTemp = findAWayToMove(list, temp.getIndex() - 1, null);
-//				isRoot = prevTemp == null;
-				System.out.println("go in inner loop");
-				while (innerIndex > interval -1 && temp.getElement() > valueNode.getElement()) {
-					prevInner = findAWayToMove(list, innerIndex - 1, null);
-					inner = prevInner.getNext();
+			pass = 0;
+			exch = 0;
+			cmp = 0;
+
+			startNode = list.getRoot();
+			boudary = findAWayToMove(list, gap, startNode);
+			boundaryIndex = boudary.getIndex();
+			
+			while (boudary != null) {
+				pass++;
+				valueNode = list.newNode(boudary.getElement());
+				boundaryIndex = boudary.getIndex();
+				trackingIndex = boundaryIndex;
+				temp = findAWayToMove(list, trackingIndex - gap, null);
+				
+				while (trackingIndex > gap -1) {
+					cmp++;
+					if (temp.getElement() > valueNode.getElement())
+						exch++;
+					else
+						break;
+					
+					prevInner = findAWayToMove(list, trackingIndex - 1, null);
+					tracking = prevInner.getNext();
 					prevTemp = findAWayToMove(list, temp.getIndex()-1, null);
 					// 2 nodes are next to each other
-					if (interval == 1)
-						swapNode(prevTemp, temp, inner);
+					if (gap == 1)
+						swapNode(prevTemp, temp, tracking);
 					//2 nodes have gap > 1
 					else {
-						swapNode(prevTemp, temp, prevInner, inner);
+						swapNode(prevTemp, temp, prevInner, tracking);
 					}
 					//if exchange node is the root, set the other node to be the root
 					if (prevTemp == null)
-						list.setRoot(inner);
-					
-					innerIndex = innerIndex - interval;
-					valueNode = findAWayToMove(list, innerIndex, null);
-					temp = findAWayToMove(list, innerIndex - interval, null);
+						list.setRoot(tracking);
+					trackingIndex = trackingIndex - gap;
+					valueNode = findAWayToMove(list, trackingIndex, null);
+					temp = findAWayToMove(list, trackingIndex - gap, null);
 				}
-				outer = findAWayToMove(list, outerIndex, null);
-				outer = outer.getNext();
+				boudary = findAWayToMove(list, boundaryIndex, null);
+				boudary = boudary.getNext();
+				
 			}
-			interval = interval == 2 ? 1 : (interval - 1)/3;
-			resultList.add(controller.displayList(list));
+
+			totalCmp += cmp;
+			totalExch += exch;
+			totalPass += pass;
+			k = gap;
+			gap = (gap - 1)/3;
+			addToOutput(resultList, (k) + "\t" + pass + "\t" + cmp + "\t" + exch);
 		}
-		System.out.println("list: "+ controller.displayList(list));
-		System.out.println("index: "+ controller.displayIndex(list));
-		controller.writeResult("shellSort", resultList);
+		addToOutput(resultList, "Total \t" + totalPass + "\t" + totalCmp + "\t" + totalExch);
+		printOutput(resultList);
+//		controller.writeResult("shellSort", resultList);
+	}
+	
+	private static void addToOutput(ArrayList<String> arr, String context) {
+		arr.add(context);
+	}
+	
+	private static void printOutput(ArrayList<String> arr) {
+		for (int i = 0; i < arr.size(); i++) {
+			System.out.println(arr.get(i));
+		}
 	}
 }

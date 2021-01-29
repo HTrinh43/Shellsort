@@ -47,26 +47,26 @@ public class controller {
 		 *@param list: the linked list	
 		 *@return: a string contains all nodes' value
 		 */
-		LinkedNode current = list.getRoot();
-		StringBuilder result = new StringBuilder();
-		while (current != null) {
-			result.append(current.getElement());
-			result.append(" ");
-			current = current.getNext();
+		LinkedNode myCurrent = list.getRoot();
+		StringBuilder myResult = new StringBuilder();
+		while (myCurrent != null) {
+			myResult.append(myCurrent.getElement());
+			myResult.append(" ");
+			myCurrent = myCurrent.getNext();
 		}
-		return result.toString();
+		return myResult.toString();
 	}
 	
 	public String displayIndex(final LinkedList list) {
-		LinkedNode current = list.getRoot();
-		StringBuilder result = new StringBuilder();
-		while (current != null) {
-			result.append(current.getIndex());
-			result.append(" ");
-			current = current.getNext();
+		LinkedNode myCurrent = list.getRoot();
+		StringBuilder myResult = new StringBuilder();
+		while (myCurrent != null) {
+			myResult.append(myCurrent.getIndex());
+			myResult.append(" ");
+			myCurrent = myCurrent.getNext();
 			
 		}
-		return result.toString();
+		return myResult.toString();
 	}
 	
 	//https://stackoverflow.com/questions/8491687/write-newline-into-a-file
@@ -81,9 +81,7 @@ public class controller {
 		      File myFile = new File(filepath);
 		      if (myFile.createNewFile()) {
 		        System.out.println("File created: " + myFile.getName());
-		      } else {
-		        System.out.println("File already exists.");
-		      }
+		      } 
 		      
 //		      FileWriter myWriter = new FileWriter(filepath);
 		      BufferedWriter myWriter = new BufferedWriter(new FileWriter(filepath, true));
@@ -92,10 +90,7 @@ public class controller {
 		    	  myWriter.newLine();
 		      }
 		      myWriter.close();
-		      
-		      
 		    } catch (IOException e) {
-		      System.out.println("An error occurred.");
 		      e.printStackTrace();
 		    }
 	}
